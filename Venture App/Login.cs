@@ -21,15 +21,15 @@ namespace Venture_App
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            gunaLineTextBox1.Text = "Username";
-            gunaLineTextBox2.Text = "Password";
+            gunaLineTextBox1.Text = "admin";
+            gunaLineTextBox2.Text = "123456";
         }      
         private void gunaLineTextBox1_Leave(object sender, EventArgs e)
         {
             Guna.UI.WinForms.GunaLineTextBox textBox = (Guna.UI.WinForms.GunaLineTextBox)sender;
             if (string.IsNullOrWhiteSpace(textBox.Text))
             {
-                textBox.Text = "admin";
+                textBox.Text = "Username";
             }
         }
         private void gunaLineTextBox1_Enter(object sender, EventArgs e)
@@ -42,7 +42,7 @@ namespace Venture_App
             Guna.UI.WinForms.GunaLineTextBox textBox = (Guna.UI.WinForms.GunaLineTextBox)sender;
             if (string.IsNullOrWhiteSpace(textBox.Text))
             {
-                textBox.Text = "123456";
+                textBox.Text = "Password";
             }
         }
         private void gunaLineTextBox2_Enter(object sender, EventArgs e)
@@ -59,21 +59,21 @@ namespace Venture_App
 
             string cn_string = ConfigurationManager.ConnectionStrings["dbcs"].ConnectionString;
 
-            using (SqlConnection cn_connection = new SqlConnection(cn_string))
-            {
+            SqlConnection cn_connection = new SqlConnection(cn_string);
+            
                 cn_connection.Open();
 
                 // Create a parameterized query to avoid SQL injection
                 string sql_Text = "SELECT * FROM Users WHERE Username = @Username AND UPassword = @Password";
 
-                using (SqlCommand command = new SqlCommand(sql_Text, cn_connection))
-                {
+            SqlCommand command = new SqlCommand(sql_Text, cn_connection);
+                
                     command.Parameters.AddWithValue("@Username", username);
                     command.Parameters.AddWithValue("@Password", password);
 
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        if (reader.Read())
+            SqlDataReader reader = command.ExecuteReader();
+                    
+                        if (reader.HasRows == true)
                         {
                             Home obj = new Home();
                             this.Hide();
@@ -83,9 +83,9 @@ namespace Venture_App
                         {
                             MessageBox.Show("Invalid Username or Password");
                         }
-                    }
-                }
-            }
+                    
+                
+            
 
         }
 

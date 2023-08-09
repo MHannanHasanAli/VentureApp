@@ -18,5 +18,7 @@ namespace Venture_App
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Login());
         }
+
+      
     }
 }

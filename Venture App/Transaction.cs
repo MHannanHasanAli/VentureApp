@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Guna.UI.WinForms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -36,13 +37,13 @@ namespace Venture_App
 
             gunaDataGridView1.DataSource = data;
 
-            gunaDataGridView1.Columns["TransactionID"].HeaderText = "Transaction ID";
+            
             gunaDataGridView1.Columns["PostingDate"].HeaderText = "Posting Date";
             gunaDataGridView1.Columns["TransactionDate"].HeaderText = "Transaction Date";
             gunaDataGridView1.Columns["Description"].HeaderText = "Description";
             gunaDataGridView1.Columns["Amount"].HeaderText = "Amount";
             gunaDataGridView1.Columns["Balance"].HeaderText = "Balance";
-
+         
             gunaDataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             // Set ColumnHeadersHeightSizeMode to enable resizing of column headers
@@ -100,14 +101,78 @@ namespace Venture_App
 
         private void gunaComboBox1_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (gunaComboBox1.SelectedItem != null && gunaComboBox1.SelectedItem is DateTime)
+            //if (gunaComboBox1.SelectedItem != null && gunaComboBox1.SelectedItem is DateTime)
+            //{
+            //    DateTime selectedDate = (DateTime)gunaComboBox1.SelectedItem;
+
+            //    DataView dv = ((DataTable)gunaDataGridView1.DataSource).DefaultView;
+            //    dv.RowFilter = string.Format("PostingDate = '{0:yyyy-MM-dd}'", selectedDate);
+
+            //    gunaDataGridView1.DataSource = dv.ToTable();
+            //}
+        }
+       
+        private void gunaDateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            //BindDataWithGrid(gunaDateTimePicker1.Value);
+        }
+        private void BindDataWithGridByDate()
+        {
+            SqlConnection con = new SqlConnection(cs);
+            string query = "SELECT * FROM Transactions ORDER BY TransactionDate ASC"; 
+            SqlDataAdapter sda = new SqlDataAdapter(query, con);
+            DataTable data = new DataTable();
+            sda.Fill(data);
+
+            
+            gunaDataGridView1.DataSource = data;
+
+            gunaDataGridView1.Columns["TransactionID"].HeaderText = "Transaction ID";
+            gunaDataGridView1.Columns["PostingDate"].HeaderText = "Posting Date";
+            gunaDataGridView1.Columns["TransactionDate"].HeaderText = "Transaction Date";
+            gunaDataGridView1.Columns["Description"].HeaderText = "Description";
+            gunaDataGridView1.Columns["Amount"].HeaderText = "Amount";
+            gunaDataGridView1.Columns["Balance"].HeaderText = "Balance";
+
+            gunaDataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            // Set ColumnHeadersHeightSizeMode to enable resizing of column headers
+            gunaDataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+
+            // Set selection mode to only select entire rows
+            gunaDataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            // Hide the TransactionID column
+            gunaDataGridView1.Columns["TransactionID"].Visible = false;
+
+            gunaDataGridView1.RowTemplate.Height = 40;
+            foreach (DataGridViewColumn column in gunaDataGridView1.Columns)
             {
-                DateTime selectedDate = (DateTime)gunaComboBox1.SelectedItem;
+                column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            }
 
-                DataView dv = ((DataTable)gunaDataGridView1.DataSource).DefaultView;
-                dv.RowFilter = string.Format("PostingDate = '{0:yyyy-MM-dd}'", selectedDate);
+            // Align column headers (names) to center
+            gunaDataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            // Customize column header appearance
+            gunaDataGridView1.EnableHeadersVisualStyles = false; // Prevent default styling
+            gunaDataGridView1.ColumnHeadersDefaultCellStyle.BackColor = Color.White; // Set background color
+            gunaDataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black; // Set text color
 
-                gunaDataGridView1.DataSource = dv.ToTable();
+            // Hook up the CellFormatting event to handle formatting of the "Amount" column
+            gunaDataGridView1.CellFormatting += GunaDataGridView1_CellFormatting;
+
+        }
+
+        private void gunaButton1_Click(object sender, EventArgs e)
+        {
+            var input = gunaComboBox1.SelectedItem;
+            if(input == "Default")
+            {
+                BindDataWithGrid();
+            }
+            else
+            {
+                BindDataWithGridByDate();
             }
         }
     }

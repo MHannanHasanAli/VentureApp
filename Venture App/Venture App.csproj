@@ -292,6 +292,7 @@
     <Compile Include="AddContract.Designer.cs">
       <DependentUpon>AddContract.cs</DependentUpon>
     </Compile>
+    <Compile Include="ContractData.cs" />
     <Compile Include="Contracts.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -330,6 +331,12 @@
     <Compile Include="Transaction.Designer.cs">
       <DependentUpon>Transaction.cs</DependentUpon>
     </Compile>
+    <Compile Include="UpdateContract.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UpdateContract.Designer.cs">
+      <DependentUpon>UpdateContract.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AddContract.resx">
       <DependentUpon>AddContract.cs</DependentUpon>
     </EmbeddedResource>
@@ -359,6 +366,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Transaction.resx">
       <DependentUpon>Transaction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UpdateContract.resx">
+      <DependentUpon>UpdateContract.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

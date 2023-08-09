@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Guna.UI.WinForms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -12,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Venture_App.Program;
 
 namespace Venture_App
 {
@@ -104,7 +106,7 @@ namespace Venture_App
 
         private void gunaDataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            if (e.RowIndex >= 0 && e.ColumnIndex == 6) // Assuming "Status" column is at index 6
+            if (e.RowIndex >= 0 && e.ColumnIndex == 7) // Assuming "Status" column is at index 6
             {
                 e.Paint(e.CellBounds, DataGridViewPaintParts.All);
 
@@ -131,7 +133,9 @@ namespace Venture_App
             }
         }
 
-     private void GunaDataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+
+
+        private void GunaDataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.RowIndex >= 0 && gunaDataGridView1.Columns[e.ColumnIndex].Name == "Photo")
             {
@@ -198,7 +202,8 @@ namespace Venture_App
                     string id = gunaDataGridView1.Rows[e.RowIndex].Cells["ContractID"].Value.ToString();
 
                     // Implement your edit logic here
-                    MessageBox.Show("Edit option clicked for row with ID: " + id);
+             int id2 = Convert.ToInt32(id);
+                    GetContractById(id2);
                 };
                 contextMenu.Items.Add(editMenuItem);
 
@@ -206,8 +211,10 @@ namespace Venture_App
                 ToolStripMenuItem deleteMenuItem = new ToolStripMenuItem("Delete");
                 deleteMenuItem.Click += (s, args) =>
                 {
-                    // Implement your delete logic here
-                    MessageBox.Show("Delete option clicked for row: " + e.RowIndex);
+                    string id = gunaDataGridView1.Rows[e.RowIndex].Cells["ContractID"].Value.ToString();
+                    
+                    int id2 = Convert.ToInt32(id);
+                    DeleteRecord(id2);
                 };
                 contextMenu.Items.Add(deleteMenuItem);
 
@@ -218,7 +225,69 @@ namespace Venture_App
             }
         }
 
-       
+        private void DeleteRecord(int id2)
+        {
+            SqlConnection con = new SqlConnection(cs);
+            string query = "delete from Contract where ContractID = @id ";
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@id", id2);
+           
+
+            con.Open();
+
+            int a = cmd.ExecuteNonQuery();
+
+            if (a > 0)
+            {
+                MessageBox.Show("Deleted", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Deletion Failed", "Failure", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            con.Close();
+        }
+
+        public void GetContractById(int contractId)
+            {
+                using (SqlConnection con = new SqlConnection(cs))
+                {
+                    con.Open();
+
+                    string query = "SELECT * FROM Contract WHERE ContractID = @ContractID";
+                    using (SqlCommand cmd = new SqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@ContractID", contractId);
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                ContractData contract = new ContractData()
+                                {
+                                    id = (int)reader["ContractID"],
+                                    Image = (byte[])reader["Photo"],
+                                    Name = reader["ContractName"].ToString(),
+                                    VName = reader["VendorName"].ToString(),
+                                    Email = reader["Email"].ToString(),
+                                    Phone = reader["Phone"].ToString(),
+                                    Rating = Convert.ToSingle(reader["Rating"]),
+                                    Status = reader["Status"].ToString(),
+                                    Designation = reader["Designation"].ToString()
+                                };
+                            UpdateContract obj = new UpdateContract(contract);
+                            obj.Show();
+                            }
+                        }
+                    }
+                }
+
+                // Contract with the given ID was not found
+            }
+        
+
+
 
         //private void gunaDataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         //{
