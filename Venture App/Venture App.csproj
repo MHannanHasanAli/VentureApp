@@ -286,6 +286,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddContract.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddContract.Designer.cs">
+      <DependentUpon>AddContract.cs</DependentUpon>
+    </Compile>
     <Compile Include="Contracts.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -303,11 +309,6 @@
     </Compile>
     <Compile Include="Home.Designer.cs">
       <DependentUpon>Home.cs</DependentUpon>
-    </Compile>
-    <Compile Include="DatabaseVentureDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DatabaseVentureDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
@@ -329,6 +330,9 @@
     <Compile Include="Transaction.Designer.cs">
       <DependentUpon>Transaction.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AddContract.resx">
+      <DependentUpon>AddContract.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Contracts.resx">
       <DependentUpon>Contracts.cs</DependentUpon>
     </EmbeddedResource>
@@ -356,17 +360,6 @@
     <EmbeddedResource Include="Transaction.resx">
       <DependentUpon>Transaction.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="DatabaseVentureDataSet.xsc">
-      <DependentUpon>DatabaseVentureDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="DatabaseVentureDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DatabaseVentureDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="DatabaseVentureDataSet.xss">
-      <DependentUpon>DatabaseVentureDataSet.xsd</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -392,15 +385,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="DatabaseVenture.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DatabaseVenture_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>DatabaseVenture.mdf</DependentUpon>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

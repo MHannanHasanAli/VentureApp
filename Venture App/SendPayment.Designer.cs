@@ -38,9 +38,9 @@
             this.gunaLineTextBox1 = new Guna.UI.WinForms.GunaLineTextBox();
             this.gunaLineTextBox2 = new Guna.UI.WinForms.GunaLineTextBox();
             this.gunaPanel1 = new Guna.UI.WinForms.GunaPanel();
+            this.gunaPictureBox1 = new Guna.UI.WinForms.GunaPictureBox();
             this.gunaGradientButton1 = new Guna.UI.WinForms.GunaGradientButton();
             this.gunaGradientButton2 = new Guna.UI.WinForms.GunaGradientButton();
-            this.gunaPictureBox1 = new Guna.UI.WinForms.GunaPictureBox();
             this.gunaPictureBox2 = new Guna.UI.WinForms.GunaPictureBox();
             this.gunaPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gunaPictureBox1)).BeginInit();
@@ -169,6 +169,17 @@
             this.gunaPanel1.Size = new System.Drawing.Size(629, 463);
             this.gunaPanel1.TabIndex = 11;
             // 
+            // gunaPictureBox1
+            // 
+            this.gunaPictureBox1.BaseColor = System.Drawing.Color.White;
+            this.gunaPictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("gunaPictureBox1.Image")));
+            this.gunaPictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.gunaPictureBox1.Name = "gunaPictureBox1";
+            this.gunaPictureBox1.Size = new System.Drawing.Size(629, 460);
+            this.gunaPictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.gunaPictureBox1.TabIndex = 0;
+            this.gunaPictureBox1.TabStop = false;
+            // 
             // gunaGradientButton1
             // 
             this.gunaGradientButton1.AnimationHoverSpeed = 0.07F;
@@ -194,6 +205,7 @@
             this.gunaGradientButton1.TabIndex = 6;
             this.gunaGradientButton1.Text = "Pay";
             this.gunaGradientButton1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.gunaGradientButton1.Click += new System.EventHandler(this.gunaGradientButton1_Click);
             // 
             // gunaGradientButton2
             // 
@@ -220,17 +232,7 @@
             this.gunaGradientButton2.TabIndex = 12;
             this.gunaGradientButton2.Text = "Close";
             this.gunaGradientButton2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // gunaPictureBox1
-            // 
-            this.gunaPictureBox1.BaseColor = System.Drawing.Color.White;
-            this.gunaPictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("gunaPictureBox1.Image")));
-            this.gunaPictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.gunaPictureBox1.Name = "gunaPictureBox1";
-            this.gunaPictureBox1.Size = new System.Drawing.Size(629, 460);
-            this.gunaPictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.gunaPictureBox1.TabIndex = 0;
-            this.gunaPictureBox1.TabStop = false;
+            this.gunaGradientButton2.Click += new System.EventHandler(this.gunaGradientButton2_Click);
             // 
             // gunaPictureBox2
             // 

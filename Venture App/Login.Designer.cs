@@ -98,7 +98,7 @@
             this.gunaLineTextBox1.SelectedText = "";
             this.gunaLineTextBox1.Size = new System.Drawing.Size(202, 26);
             this.gunaLineTextBox1.TabIndex = 6;
-            this.gunaLineTextBox1.Text = "Username";
+            this.gunaLineTextBox1.Text = "admin";
             this.gunaLineTextBox1.Enter += new System.EventHandler(this.gunaLineTextBox1_Enter);
             this.gunaLineTextBox1.Leave += new System.EventHandler(this.gunaLineTextBox1_Leave);
             // 
@@ -115,11 +115,11 @@
             this.gunaLineTextBox2.SelectedText = "";
             this.gunaLineTextBox2.Size = new System.Drawing.Size(202, 26);
             this.gunaLineTextBox2.TabIndex = 7;
-            this.gunaLineTextBox2.Text = "Password";
+            this.gunaLineTextBox2.Text = "123456";
             this.gunaLineTextBox2.Enter += new System.EventHandler(this.gunaLineTextBox2_Enter);
             this.gunaLineTextBox2.Leave += new System.EventHandler(this.gunaLineTextBox2_Leave);
             // 
-            // Form1
+            // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -131,7 +131,7 @@
             this.Controls.Add(this.gunaPictureBox1);
             this.Controls.Add(this.gunaPanel1);
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.Name = "Form1";
+            this.Name = "Login";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gunaPictureBox1)).EndInit();

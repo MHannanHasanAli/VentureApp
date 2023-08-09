@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -28,7 +29,7 @@ namespace Venture_App
             Guna.UI.WinForms.GunaLineTextBox textBox = (Guna.UI.WinForms.GunaLineTextBox)sender;
             if (string.IsNullOrWhiteSpace(textBox.Text))
             {
-                textBox.Text = "Username";
+                textBox.Text = "admin";
             }
         }
         private void gunaLineTextBox1_Enter(object sender, EventArgs e)
@@ -41,7 +42,7 @@ namespace Venture_App
             Guna.UI.WinForms.GunaLineTextBox textBox = (Guna.UI.WinForms.GunaLineTextBox)sender;
             if (string.IsNullOrWhiteSpace(textBox.Text))
             {
-                textBox.Text = "Password";
+                textBox.Text = "123456";
             }
         }
         private void gunaLineTextBox2_Enter(object sender, EventArgs e)
@@ -49,20 +50,21 @@ namespace Venture_App
             Guna.UI.WinForms.GunaLineTextBox textBox = (Guna.UI.WinForms.GunaLineTextBox)sender;
             textBox.Text = "";
         }
-        
+
+    
         private void gunaGradientButton1_Click(object sender, EventArgs e)
         {
             var username = gunaLineTextBox1.Text;
             var password = gunaLineTextBox2.Text;
 
-            string cn_string = Properties.Settings.Default.DatabaseVentureConnectionString;
+            string cn_string = ConfigurationManager.ConnectionStrings["dbcs"].ConnectionString;
 
             using (SqlConnection cn_connection = new SqlConnection(cn_string))
             {
                 cn_connection.Open();
 
                 // Create a parameterized query to avoid SQL injection
-                string sql_Text = "SELECT * FROM Users WHERE Username = @Username AND Password = @Password";
+                string sql_Text = "SELECT * FROM Users WHERE Username = @Username AND UPassword = @Password";
 
                 using (SqlCommand command = new SqlCommand(sql_Text, cn_connection))
                 {
