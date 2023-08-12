@@ -1,4 +1,5 @@
 ﻿using Guna.UI.WinForms;
+using ServiceStack;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,6 +7,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -26,6 +28,23 @@ namespace Venture_App
             this.Close();
         }
 
+        byte[] ConvertImageToBytes(Image img)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                img.Save(ms, ImageFormat.Png);
+                return ms.ToArray();
+            }
+        }
+
+        public Image ConvertByteArraytoImage(byte[] data)
+        {
+            using (MemoryStream ms = new MemoryStream(data))
+            {
+                return Image.FromStream(ms);
+            }
+        }
+
         private void gunaGradientButton3_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -40,7 +59,7 @@ namespace Venture_App
         private void gunaGradientButton1_Click(object sender, EventArgs e)
         {
             SqlConnection con = new SqlConnection(cs);
-            string query = "insert into Contract values  (@ContractName, @VendorName, @Email, @Phone, @Rating, @Status, @Designation, @Photo)";
+            string query = "insert into Contract(ContractName, VendorName, Email, Phone, Rating, Status, Designation, Photo) values  (@ContractName, @VendorName, @Email, @Phone, @Rating, @Status, @Designation, @Photo)";
             SqlCommand cmd = new SqlCommand(query, con);
             cmd.Parameters.AddWithValue("@ContractName", gunaLineTextBox1.Text);
             cmd.Parameters.AddWithValue("@VendorName", gunaLineTextBox2.Text);
@@ -49,8 +68,16 @@ namespace Venture_App
             cmd.Parameters.AddWithValue("@Rating", gunaLineTextBox5.Text);
             cmd.Parameters.AddWithValue("@Status", gunaComboBox1.SelectedItem);
             cmd.Parameters.AddWithValue("@Designation", gunaLineTextBox6.Text);
-            cmd.Parameters.AddWithValue("@Photo", getphoto());
 
+            if (gunaPictureBox2.Image == null)
+            {
+                byte[] imageBT = null;
+                cmd.Parameters.AddWithValue("@Photo", imageBT);
+            }
+            else
+            {
+                cmd.Parameters.AddWithValue("@Photo", ConvertImageToBytes(gunaPictureBox2.Image));
+            }
             con.Open();
 
             int a = cmd.ExecuteNonQuery();

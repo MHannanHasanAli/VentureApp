@@ -42,5 +42,25 @@ namespace Venture_App
         {
             loadform(new Transaction());
         }
+
+        private void mainpanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void Home_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Home_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void gunaGradientButton1_Click(object sender, EventArgs e)
+        {
+            Application.Restart();
+        }
     }
 }

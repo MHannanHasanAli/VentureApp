@@ -21,9 +21,30 @@ namespace Venture_App
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            string cn_string = ConfigurationManager.ConnectionStrings["dbcs"].ConnectionString;
+
+            SqlConnection cn_connection = new SqlConnection(cn_string);
+
+
+            cn_connection.Open();
+            SqlCommand cmd = new SqlCommand("select count(*) from Users", cn_connection);
+            int Count = int.Parse(cmd.ExecuteScalar().ToString());
+
+
+            if (Count == 0)
+            {
+                cmd = new SqlCommand("insert into Users(Username,Password) values ('admin','123456')", cn_connection);
+                cmd.ExecuteNonQuery();
+                MessageBox.Show("User Saved username: admin and Password: 123456");
+            }
+
+            cn_connection.Close();
+
+
+
             gunaLineTextBox1.Text = "admin";
             gunaLineTextBox2.Text = "123456";
-        }      
+        }
         private void gunaLineTextBox1_Leave(object sender, EventArgs e)
         {
             Guna.UI.WinForms.GunaLineTextBox textBox = (Guna.UI.WinForms.GunaLineTextBox)sender;
@@ -51,7 +72,7 @@ namespace Venture_App
             textBox.Text = "";
         }
 
-    
+
         private void gunaGradientButton1_Click(object sender, EventArgs e)
         {
             var username = gunaLineTextBox1.Text;
@@ -60,32 +81,32 @@ namespace Venture_App
             string cn_string = ConfigurationManager.ConnectionStrings["dbcs"].ConnectionString;
 
             SqlConnection cn_connection = new SqlConnection(cn_string);
-            
-                cn_connection.Open();
 
-                // Create a parameterized query to avoid SQL injection
-                string sql_Text = "SELECT * FROM Users WHERE Username = @Username AND UPassword = @Password";
+            cn_connection.Open();
+
+            // Create a parameterized query to avoid SQL injection
+            string sql_Text = "SELECT * FROM Users WHERE Username = @Username AND UPassword = @Password";
 
             SqlCommand command = new SqlCommand(sql_Text, cn_connection);
-                
-                    command.Parameters.AddWithValue("@Username", username);
-                    command.Parameters.AddWithValue("@Password", password);
+
+            command.Parameters.AddWithValue("@Username", username);
+            command.Parameters.AddWithValue("@Password", password);
 
             SqlDataReader reader = command.ExecuteReader();
-                    
-                        if (reader.HasRows == true)
-                        {
-                            Home obj = new Home();
-                            this.Hide();
-                            obj.Show();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Invalid Username or Password");
-                        }
-                    
-                
-            
+
+            if (reader.HasRows == true)
+            {
+                Home obj = new Home();
+                this.Hide();
+                obj.Show();
+            }
+            else
+            {
+                MessageBox.Show("Invalid Username or Password");
+            }
+
+
+
 
         }
 

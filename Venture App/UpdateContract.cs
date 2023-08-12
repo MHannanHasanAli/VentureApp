@@ -94,5 +94,10 @@ namespace Venture_App
             gunaPictureBox2.Image.Save(stream, gunaPictureBox2.Image.RawFormat);
             return stream.GetBuffer();
         }
+
+        private void UpdateContract_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

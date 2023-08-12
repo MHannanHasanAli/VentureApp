@@ -10,15 +10,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using VPaged.WF;
 
 namespace Venture_App
 {
     public partial class Transaction : Form
     {
         string cs = ConfigurationManager.ConnectionStrings["dbcs"].ConnectionString;
+
+
         public Transaction()
         {
             InitializeComponent();
+
+            // Create an instance of VPagination and configure it
+
         }
 
         private void gunaButton4_Click(object sender, EventArgs e)
@@ -73,6 +79,7 @@ namespace Venture_App
             
         }
 
+       
         private void GunaDataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             // Check if the current column is the "Amount" column and the cell value is a valid number

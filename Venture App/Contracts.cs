@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Jenga.Theme;
 using static Venture_App.Program;
 
 namespace Venture_App
@@ -62,7 +63,7 @@ namespace Venture_App
             gunaDataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             gunaDataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
-            gunaDataGridView1.RowTemplate.Height = 40;
+            gunaDataGridView1.RowTemplate.Height = 50;
             foreach (DataGridViewColumn column in gunaDataGridView1.Columns)
             {
                 if (column.HeaderText == " ")
@@ -71,7 +72,7 @@ namespace Venture_App
                 }
                 else if (column.HeaderText == "Contract Name")
                 {
-                    column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+                    column.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 }
                 else
                 {
@@ -99,9 +100,20 @@ namespace Venture_App
                 CellTemplate = new DataGridViewButtonCell { UseColumnTextForButtonValue = true }
             };
             gunaDataGridView1.Columns.Add(actionsColumn);
-
+            
             // Attach the CellClick event to the DataGridView to handle the button click
             gunaDataGridView1.CellClick += gunaDataGridView1_CellClick;
+            int lastRowIndex = gunaDataGridView1.Rows.Count - 1;
+            if (gunaDataGridView1.Rows[lastRowIndex].IsNewRow)
+            {
+                // Cancel the new row, effectively removing it from the DataGridView
+                gunaDataGridView1.CancelEdit();
+            }
+            else
+            {
+                // Remove the last row
+                gunaDataGridView1.Rows.RemoveAt(lastRowIndex);
+            }
         }
 
         private void gunaDataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
@@ -285,7 +297,12 @@ namespace Venture_App
 
                 // Contract with the given ID was not found
             }
-        
+
+        private void gunaDataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
 
 
 
